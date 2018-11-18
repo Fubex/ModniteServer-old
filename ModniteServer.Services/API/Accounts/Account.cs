@@ -41,5 +41,9 @@ namespace ModniteServer.API.Accounts
         public HashSet<string> CoreItems { get; set; }
 
         public Dictionary<string, string> EquippedItems { get; set; }
+
+        // Implement levels
+        public int Level { get; set; }
+        public int TotalLevel { get; set; }
     }
 }
