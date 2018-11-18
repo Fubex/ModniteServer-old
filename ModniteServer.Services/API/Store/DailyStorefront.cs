@@ -11,7 +11,7 @@ namespace ModniteServer.API.Store
             {
                 new StoreItem
                 {
-                    TemplateId = "AthenaCharacter:CID_003_Athena_Commando_F_Default",
+                    TemplateId = "AthenaCharacter:CID_003_Athena_Commando_F_Default",//
                 },
                 new StoreItem
                 {
