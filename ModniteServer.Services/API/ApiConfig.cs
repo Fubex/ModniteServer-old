@@ -217,9 +217,13 @@ namespace ModniteServer.API
         public List<string> ClientEvents { get; set; }
 
         /// <summary>
-        /// Default level and total level values
+        /// Sets the default season level for an account
         /// </summary>
         public int DefaultLevel { get; set; }
+
+        /// <summary>
+        /// Sets the default total level for an account
+        /// </summary>
         public int DefaultTotalLevel { get; set; }
     }
 }
