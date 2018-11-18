@@ -138,6 +138,16 @@ namespace ModniteServer.API
                 "HomebaseBannerIcon:standardbanner31"
             };
 
+            DailyShopItems = new HashSet<string>
+            {
+                "AthenaCharacter:CID_003_Athena_Commando_F_Default",
+                "AthenaCharacter:CID_004_Athena_Commando_F_Default",
+                "AthenaCharacter:CID_005_Athena_Commando_M_Default",
+                "AthenaCharacter:CID_006_Athena_Commando_M_Default",
+                "AthenaCharacter:CID_007_Athena_Commando_M_Default",
+                "AthenaCharacter:CID_008_Athena_Commando_M_Default"
+            };
+
 #if DEBUG
             LogHttpRequests = true;
             Log404 = true;
@@ -204,6 +214,11 @@ namespace ModniteServer.API
         /// Gets or sets whether to log all valid HTTP requests.
         /// </summary>
         public bool LogHttpRequests { get; set; }
+
+        /// <summary>
+        /// Gets or sets the daily item shop items.
+        /// </summary>
+        public HashSet<string> DailyShopItems { get; set; }
 
         /// <summary>
         /// Gets or sets whether to log all HTTP requests to nonexistent endpoints. This setting is
