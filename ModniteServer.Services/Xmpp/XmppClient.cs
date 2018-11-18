@@ -94,7 +94,7 @@ namespace ModniteServer.Xmpp
 
             if (!messageHandled)
             {
-                Log.Warning("[XMPP] Uhandled message received {Message}", element);
+                Log.Warning("[XMPP] Unhandled message received {Message}", element);
             }
 
             response = null;
