@@ -215,5 +215,11 @@ namespace ModniteServer.API
         /// Gets or sets the list of events.
         /// </summary>
         public List<string> ClientEvents { get; set; }
+
+        /// <summary>
+        /// Default level and total level values
+        /// </summary>
+        public int DefaultLevel { get; set; }
+        public int DefaultTotalLevel { get; set; }
     }
 }

@@ -39,7 +39,7 @@ namespace ModniteServer.API.Controllers.Profile
                     attributes = new
                     {
                         max_level_bonus = 0,
-                        level = 1,
+                        level = account.Level,
                         item_seen = 1,
                         xp = 0,
                         variants = new List<object>(),
@@ -101,11 +101,11 @@ namespace ModniteServer.API.Controllers.Profile
                                     book_purchased = false,
                                     lifetime_wins = 0,
                                     favorite_hat = "",
-                                    level = 100,
+                                    level = account.Level,
                                     favorite_battlebus = "",
                                     favorite_mapmarker = "",
                                     favorite_vehicledeco = "",
-                                    accountLevel = 1000000,
+                                    accountLevel = account.TotalLevel,
                                     favorite_backpack = account.EquippedItems["favorite_backpack"],
                                     favorite_dance = dances,
                                     inventory_limit_bonus = 0,
