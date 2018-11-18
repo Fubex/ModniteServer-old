@@ -24,7 +24,7 @@ namespace ModniteServer.API
             {
                 Log.Warning("Config file is missing, so a default config was created. {Path}", configPath);
 
-                string json = JsonConvert.SerializeObject(new ApiConfig(), Formatting.Indented);
+                string json = JsonConvert.SerializeObject(ApiConfigDefault(), Formatting.Indented);
                 File.WriteAllText(configPath, json);
             }
 
@@ -40,16 +40,17 @@ namespace ModniteServer.API
         /// <summary>
         /// Constructs a default config.
         /// </summary>
-        private ApiConfig()
+        static ApiConfig ApiConfigDefault()
         {
-            Port = DefaultApiPort;
-            XmppPort = DefaultXmppPort;
-            MatchmakerPort = DefaultMatchmakerPort;
+            var config = new ApiConfig();
+            config.Port = DefaultApiPort;
+            config.XmppPort = DefaultXmppPort;
+            config.MatchmakerPort = DefaultMatchmakerPort;
 
-            AutoCreateAccounts = true;
-            MinimumVersionString = "6.10.4464155";
+            config.AutoCreateAccounts = true;
+            config.MinimumVersionString = "6.10.4464155";
 
-            DefaultAthenaItems = new HashSet<string>
+            config.DefaultAthenaItems = new HashSet<string>
             {
                 "AthenaDance:eid_dancemoves",
                 "AthenaGlider:defaultglider",
@@ -64,7 +65,7 @@ namespace ModniteServer.API
                 "AthenaCharacter:CID_016_Athena_Commando_F",
             };
 
-            EquippedItems = new Dictionary<string, string>
+            config.EquippedItems = new Dictionary<string, string>
             {
                 {"favorite_character",""},
                 {"favorite_backpack",""},
@@ -81,7 +82,7 @@ namespace ModniteServer.API
                 {"favorite_loadingscreen",""},
             };
 
-            DefaultCoreItems = new HashSet<string>
+            config.DefaultCoreItems = new HashSet<string>
             {
                 "HomebaseBannerColor:defaultcolor1",
                 "HomebaseBannerColor:defaultcolor2",
@@ -138,7 +139,7 @@ namespace ModniteServer.API
                 "HomebaseBannerIcon:standardbanner31"
             };
 
-            DailyShopItems = new HashSet<string>
+            config.DailyShopItems = new HashSet<string>
             {
                 "AthenaCharacter:CID_003_Athena_Commando_F_Default",
                 "AthenaCharacter:CID_004_Athena_Commando_F_Default",
@@ -148,17 +149,18 @@ namespace ModniteServer.API
                 "AthenaCharacter:CID_008_Athena_Commando_M_Default"
             };
 
-            FeaturedShopItems = new HashSet<string>
+            config.FeaturedShopItems = new HashSet<string>
             {
                 "AthenaCharacter:CID_002_Athena_Commando_F_Default",
                 "AthenaCharacter:CID_001_Athena_Commando_F_Default"
             };
 #if DEBUG
-            LogHttpRequests = true;
-            Log404 = true;
+            config.LogHttpRequests = true;
+            config.Log404 = true;
 #endif
 
-            ClientEvents = new List<string>();
+            config.ClientEvents = new List<string>();
+            return config;
         }
 
         public static ApiConfig Current { get; }
