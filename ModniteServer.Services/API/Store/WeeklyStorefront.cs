@@ -9,13 +9,15 @@ namespace ModniteServer.API.Store
             Name = "BRWeeklyStorefront";
             IsWeeklyStore = true;
             Catalog = new List<StoreItem>();
+            var Priority = -1;
             foreach (var i in ApiConfig.Current.FeaturedShopItems)
             {
                 Catalog.Add(new StoreItem
                 {
-                    TemplateId = i.Key,
-                    Priority = i.Value
+                    TemplateId = i,
+                    Priority = Priority
                 });
+                Priority -= 1;
             }
         }
     }
