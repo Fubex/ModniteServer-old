@@ -93,8 +93,8 @@ namespace ModniteServer.Xmpp
                 case "presence":
                     {
                         var rResponse = new XElement("presence",
-                            new XAttribute("to", AccountID),
-                            new XAttribute("from", AccountID),
+                            new XAttribute("to", $"{AccountID}@prod.ol.epicgames.com/{Resource}"),
+                            new XAttribute("from", $"{AccountID}@prod.ol.epicgames.com/{Resource}"),
                             new XElement("status", JsonConvert.SerializeObject(new
                             {
                                 Status = "",
