@@ -7,33 +7,15 @@ namespace ModniteServer.API.Store
         public DailyStorefront()
         {
             Name = "BRDailyStorefront";
-            Catalog = new List<StoreItem>
+            
+            Catalog = new List<StoreItem>();
+            foreach (var i in ApiConfig.Current.DailyShopItems)
             {
-                new StoreItem
+                Catalog.Add(new StoreItem
                 {
-                    TemplateId = "AthenaCharacter:CID_003_Athena_Commando_F_Default",
-                },
-                new StoreItem
-                {
-                    TemplateId = "AthenaCharacter:CID_004_Athena_Commando_F_Default"
-                },
-                new StoreItem
-                {
-                    TemplateId = "AthenaCharacter:CID_005_Athena_Commando_M_Default"
-                },
-                new StoreItem
-                {
-                    TemplateId = "AthenaCharacter:CID_006_Athena_Commando_M_Default"
-                },
-                new StoreItem
-                {
-                    TemplateId = "AthenaCharacter:CID_007_Athena_Commando_M_Default"
-                },
-                new StoreItem
-                {
-                    TemplateId = "AthenaCharacter:CID_008_Athena_Commando_M_Default"
-                },
-            };
+                    TemplateId = i
+                });
+            }
         }
     }
 }

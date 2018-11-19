@@ -8,19 +8,17 @@ namespace ModniteServer.API.Store
         {
             Name = "BRWeeklyStorefront";
             IsWeeklyStore = true;
-            Catalog = new List<StoreItem>
+            Catalog = new List<StoreItem>();
+            var Priority = -1;
+            foreach (var i in ApiConfig.Current.FeaturedShopItems)
             {
-                new StoreItem
+                Catalog.Add(new StoreItem
                 {
-                    TemplateId = "AthenaCharacter:CID_002_Athena_Commando_F_Default",
-                    Priority = -1
-                },
-                new StoreItem
-                {
-                    TemplateId = "AthenaCharacter:CID_001_Athena_Commando_F_Default",
-                    Priority = -2
-                }
-            };
+                    TemplateId = i,
+                    Priority = Priority
+                });
+                Priority -= 1;
+            }
         }
     }
 }
