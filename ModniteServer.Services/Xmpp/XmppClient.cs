@@ -1,6 +1,9 @@
-﻿using Serilog;
+﻿using System;
+using System.Collections.Generic;
+using Serilog;
 using System.Net.Sockets;
 using System.Xml.Linq;
+using Newtonsoft.Json;
 
 namespace ModniteServer.Xmpp
 {
@@ -15,6 +18,10 @@ namespace ModniteServer.Xmpp
         public XmppServer Server { get; }
 
         public Socket Socket { get; }
+
+        private string AccountID { get; set; }
+
+        private string Resource { get; set; }
 
         internal void HandleMessage(XElement element, out XElement response)
         {
@@ -37,6 +44,8 @@ namespace ModniteServer.Xmpp
                             string resource = query.Element(authNs + "resource").Value;
 
                             Log.Information("[XMPP] Login requested for '" + username + "'");
+                            AccountID = username;
+                            Resource = resource;
 
                             var loginSuccessfulResponse = new XElement("iq");
                             loginSuccessfulResponse.Add(new XAttribute("type", "result"), new XAttribute("id", "_xmpp_auth1"));
@@ -83,11 +92,82 @@ namespace ModniteServer.Xmpp
 
                 case "presence":
                     {
-                        // TODO
-                        // <presence>
-                        //   <status>json data</status>
-                        //   <delay stamp="datetime" xmlns="urn:xmpp:delay" />
-                        // </presence>
+                        var rResponse = new XElement("presence",
+                            new XAttribute("to", AccountID),
+                            new XAttribute("from", AccountID),
+                            new XElement("status", JsonConvert.SerializeObject(new
+                            {
+                                Status = "",
+                                bIsPlaying = false,
+                                bHasVoiceSupport = false,
+                                SessionId = "",
+                                Properties = new { }
+                            })),
+                            new XElement("priority", 0),
+                            new XElement("delay",
+                                new XAttribute("xlmns", "urn:xmpp:delay"),
+                                new XAttribute("stamp", DateTime.Now.ToString("yyyy-MM-ddTHH:mm:ss.fffZ"))));
+
+                        Server.SendXmppMessage(Socket, rResponse);
+
+                        rResponse = new XElement("presence",
+                            new XAttribute("forwarded-packet", true),
+                            new XAttribute("to", $"{AccountID}@prod.ol.epicgames.com/{Resource}"),
+                            new XAttribute("CLUSTER_HOPS_AMOUNT", 1),
+                            new XAttribute("from", $"{AccountID}@prod.ol.epicgames.com/{Resource}"),
+                            new XElement("show", "xa"),
+                            new XElement("status", JsonConvert.SerializeObject(new
+                            {
+                                Status = "Battle Royale Lobby - 1 / 4", // change when you can actually join people (if ever)
+                                bIsPlaying = false,
+                                bIsJoinable = false,
+                                bHasVoiceSupport = false,
+                                SessionId = "",
+                                Properties = new
+                                {
+                                    FortBasicInfo_j = new
+                                    {
+                                        homeBaseRating = 1
+                                    },
+                                    FortLFG_I = "0",
+                                    FortPartySize_i = 1,
+                                    FortSubGame_i = 1,
+                                    InUnjoinableMatch_b = false,
+                                    Event_Level_s = "0",
+                                    Event_Rating_u = 1,
+                                    RichPresence_s = "AthenaLobby",
+                                    Event_PartySize_s = "1",
+                                    Event_PartyMaxSize_s = "4",
+                                    Event_PlayersAlive_s = "48"
+                                }
+                            })),
+                            new XElement("delay",
+                                new XAttribute("xlmns", "urn:xmpp:delay"),
+                                new XAttribute("stamp", DateTime.Now.ToString("yyyy-MM-ddTHH:mm:ss.fffZ"))));
+
+                        Server.SendXmppMessage(Socket, rResponse);
+
+                        rResponse = new XElement("presence",
+                            new XAttribute("forwarded-packet", true),
+                            new XAttribute("to", $"{AccountID}@prod.ol.epicgames.com/{Resource}"),
+                            new XAttribute("CLUSTER_HOPS_AMOUNT", 1),
+                            new XAttribute("from", $"{AccountID}@prod.ol.epicgames.com/{Resource}"),
+                            new XElement("status", JsonConvert.SerializeObject(new
+                            {
+                                Status = "",
+                                bIsPlaying = false,
+                                bIsJoinable = false,
+                                bHasVoiceSupport = false,
+                                SessionId = "",
+                                Properties = new { }
+                            })),
+                            new XElement("priority", 0),
+                            new XElement("delay",
+                                new XAttribute("xlmns", "urn:xmpp:delay"),
+                                new XAttribute("stamp", DateTime.Now.ToString("yyyy-MM-ddTHH:mm:ss.fffZ"))));
+
+                        Server.SendXmppMessage(Socket, rResponse);
+                        messageHandled = true;
                     }
                     break;
             }
